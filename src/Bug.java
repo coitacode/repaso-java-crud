@@ -17,10 +17,8 @@ public class Bug {
         return titulo;
     }
     public void setTitulo(String titulo){
-        if(titulo.isEmpty()){
-
-            System.out.println("Titulo no peude ir vacio");
-            return;
+        if (titulo.isBlank()){
+            throw new IllegalArgumentException("Este campo es obligatorio, no puede ser vacio");
         }
         this.titulo = titulo;
     }
@@ -35,8 +33,9 @@ public class Bug {
         }
         this.descripcion = descripcion;
     }
+
     @Override
-    public String toString(){
-        return "BUG" + " Id:" + id + "| Titulo: " + titulo +"| Descripcion: " + descripcion + ". ";
+    public String toString() {
+        return "BUG" + " Id:" + id + "| Titulo: " + titulo + "| Descripcion: " + descripcion + ". ";
     }
 }

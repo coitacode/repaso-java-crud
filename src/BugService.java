@@ -11,12 +11,17 @@ public class BugService {
     }
     //METODO PARA LISTAR LOS BUGS REGISTRADOS
     public void verBugs(){
+        if(bugs.isEmpty()){
+            System.out.println("No hay registros");
+            return;
+        }
         for(Bug bug: bugs ){
             System.out.println(bug);
         }
     }
     //METODO PARA EDITAR ALGUN BUG YA REGISTRADO
     public void editarBug (String idEditar, String nuevoTitulo, String nuevaDescripcion){
+
         for(Bug bug: bugs){
             if(bug.getId().equals(idEditar)){
                 bug.setTitulo(nuevoTitulo);
@@ -44,4 +49,5 @@ public class BugService {
         }
         return false;
     }
+
 }

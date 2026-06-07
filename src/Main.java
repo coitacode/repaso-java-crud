@@ -5,6 +5,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         BugService bugService = new BugService();
         boolean continuar = true ;
+        String confirmacion = "";
 
         do {
             System.out.println("Selecciona una opcion del 1 al 5");
@@ -23,8 +24,13 @@ public class Main {
                 switch (menu){
                     case 1:
                         //OPCIÓN 1: INGRESAR
-                        System.out.println("Ingresa Id");
+                        System.out.println("Ingresa Id (BUG-XXX)");
                         id = scanner.nextLine();
+
+                        if(! id.startsWith("BUG-")){
+                            System.out.println("El formato ID no es correcto");
+                            break;
+                        }
 
                         if(bugService.existeId(id)){
                             System.out.println("El id que intentas agragar ya existe en la BD");
@@ -32,8 +38,16 @@ public class Main {
                         }
                         System.out.println("Ingresa Titulo");
                         titulo = scanner.nextLine();
+                        if(titulo.isBlank()){
+                            System.out.println("El titulo no debe estar vacio");
+                            break;
+                        }
                         System.out.println("Ingresa Descripcion");
                         descripcion = scanner.nextLine();
+                        if(descripcion.isBlank()){
+                            System.out.println("La descripcion no puede estar vacia");
+                            break;
+                        }
 
                         Bug bug = new Bug(id,titulo, descripcion);
 
@@ -45,8 +59,16 @@ public class Main {
                         bugService.verBugs();
                         break;
                     case 3:
+                        if(bugService.bugs.isEmpty()){
+                            System.out.println("No hay registros para editar");
+                            break;
+                        }
                         System.out.println("Ingresa el id del registro a editar");
                         idEditar = scanner.nextLine();
+                        if(!bugService.existeId(idEditar)){
+                            System.out.println("Error: El ID ingresado no fue encontrado en el sistema.");
+                            break;
+                        }
                         System.out.println("Ingresa el nuevo titulo");
                         String nuevoTitulo = scanner.nextLine();
                         System.out.println("Actualiza la descripcion");
@@ -57,10 +79,29 @@ public class Main {
                         break;
 
                     case 4:
+                        if(bugService.bugs.isEmpty()){
+                            System.out.println("No hay registros para eliminar");
+                            break;
+                        }
                         System.out.println("Ingresa el ID que deseas eliminar");
                         String idEliminar = scanner.nextLine();
-                        bugService.eliminarBug(idEliminar);
-                        bugService.verBugs();
+                        if(!bugService.existeId(idEliminar)){
+                            System.out.println("Error: El ID ingresado no fue encontrado en el sistema.");
+                            break;
+                        }
+                        System.out.println("Está seguro que deSea elminar el registro " + idEliminar
+                        );
+                        System.out.println("escribe (S) para continuar o (N) para cancelar");
+                        confirmacion = scanner.nextLine();
+                            if(confirmacion.equalsIgnoreCase("S")){
+                                bugService.eliminarBug(idEliminar);
+                            }
+                            else{
+                                System.out.println("Accion cancelada");
+                                break;
+                            }
+
+                        System.out.println("Registro eliminado");
                         break;
 
                     case 5:
@@ -70,8 +111,6 @@ public class Main {
 
                     default:
                         System.out.println(menu + " no es parte del menú");
-
-
                 }
 
             }else{
@@ -79,10 +118,6 @@ public class Main {
                scanner.nextLine();
             }
             }
-
-
-
         while( continuar);
     }
-
 }
