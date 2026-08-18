@@ -27,7 +27,7 @@ public class Bug {
     }
 
     public void setDescripcion(String descripcion) {
-        if(descripcion.length()>20){
+        if(descripcion.length()>255){
             System.out.println("Maximo 10 caracteres");
             throw new IllegalArgumentException("el campo acepta maximo 20 caracteres");
         }

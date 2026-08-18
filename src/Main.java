@@ -2,8 +2,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+
         Scanner scanner = new Scanner(System.in);
-        BugService bugService = new BugService();
+       BugRepository bugService = new BugService();
         boolean continuar = true ;
         String confirmacion = "";
 
@@ -56,13 +57,10 @@ public class Main {
                         break;
                     case 2:
                         //OPCIÓN 2: VER LISTA DE BUGS
-                        bugService.verBugs();
+                        bugService.verRegistros();
                         break;
                     case 3:
-                        if(bugService.bugs.isEmpty()){
-                            System.out.println("No hay registros para editar");
-                            break;
-                        }
+
                         System.out.println("Ingresa el id del registro a editar");
                         idEditar = scanner.nextLine();
                         if(!bugService.existeId(idEditar)){
@@ -74,15 +72,12 @@ public class Main {
                         System.out.println("Actualiza la descripcion");
                         String nuevaDescripcion = scanner.nextLine();
 
-                        bugService.editarBug(idEditar, nuevoTitulo, nuevaDescripcion);
-                        bugService.verBugs();
+                        bugService.editarRegistros(idEditar, nuevoTitulo, nuevaDescripcion);
+                        bugService.verRegistros();
                         break;
 
                     case 4:
-                        if(bugService.bugs.isEmpty()){
-                            System.out.println("No hay registros para eliminar");
-                            break;
-                        }
+
                         System.out.println("Ingresa el ID que deseas eliminar");
                         String idEliminar = scanner.nextLine();
                         if(!bugService.existeId(idEliminar)){
@@ -94,7 +89,7 @@ public class Main {
                         System.out.println("escribe (S) para continuar o (N) para cancelar");
                         confirmacion = scanner.nextLine();
                             if(confirmacion.equalsIgnoreCase("S")){
-                                bugService.eliminarBug(idEliminar);
+                                bugService.eliminarRegistros(idEliminar);
                             }
                             else{
                                 System.out.println("Accion cancelada");
